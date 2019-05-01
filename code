@@ -1,0 +1,139 @@
+<html>
+<body>                               //<body onload="functinT()">解决初始未计算的问题。
+<select id="year-select" onchange="functinT()">//onchange当选择框有所改变时，触发函数
+<option value="2000">2000</option>
+<option value="2001">2001</option>
+<option value="2002">2002</option>
+<option value="2019">2019</option>
+</select>
+
+<select id="month-select" onchange="functinT()">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="12">12</option>
+</select>
+
+<select id="day-select" onchange="functinT()">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="31">31</option>
+</select>
+
+<select id="hour-select" onchange="functinT()">
+<option value="0">00</option>
+<option value="1">01</option>
+<option value="3">03</option>
+<option value="4">04</option>
+<option value="5">05</option>
+<option value="17">17</option>
+</select>
+
+<select id="minite-select" onchange="functinT()">
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="27">27</option>
+<option>59</option>
+</select>
+
+<select id="second-select" onchange="functinT()">
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option>59</option>
+</select>
+
+<p id="result-wrapper" >现在距离 2001年1月1日星期X HH:MM:SS 还有 X 天 X 小时 X 分 X 秒</p>
+
+<script>
+varyy=document.getElementById('year-select');
+var mm=document.getElementById('month-select');
+vardd=document.getElementById('day-select');
+var list=[{value:1,textContent:1},value:2,textContent:2},
+          {value:3,textContent:3},{value:4,textContent:4},
+          {value:5,textContent:5},{value:6,textContent:6},
+          {value:7,textContent:7},{value:8,textContent:8}
+]
+for(vari=0;i<list.length;i++){
+varoptionItem=document.createElement('option');
+optionItem.value=list[i].value;
+optionItem.textContent=list[i].textContent;
+yy.appendChild(optionItem);  //不能把三个append放在一个循环里，因为新建的一个element只能插入在一个父标签下，他不同于数值，可以给多个
+}
+for(vari=0;i<list.length;i++){
+varoptionItem=document.createElement('option');
+optionItem.value=list[i].value;
+optionItem.textContent=list[i].textContent;
+mm.appendChild(optionItem);
+}
+for(vari=0;i<list.length;i++){
+varoptionItem=document.createElement('option');
+optionItem.value=list[i].value;
+optionItem.textContent=list[i].textContent;
+dd.appendChild(optionItem);
+}
+
+
+function functinT(){     //每个都是获得当前选项，所以不用每个selection监听不同函数，都在functinT()里实现同步改变的功能
+varyy=document.getElementById('year-select');
+var mm=document.getElementById('month-select');
+vardd=document.getElementById('day-select');
+varhh=document.getElementById('hour-select');
+var mi=document.getElementById('minite-select');
+varss=document.getElementById('second-select');
+
+varvalueY=checkSelect(yy);
+varvalueM=checkSelect(mm);
+varvalueD=checkSelect(dd);
+varvalueH=checkSelect(hh);
+varvalueMi=checkSelect(mi);
+varvalueS=checkSelect(ss);
+
+var pp=document.getElementById('result-wrapper');
+
+var today=new Date();    //获得现在时间的相关参数
+var ty=today.getYear();
+var tm=today.getMonth();
+var td=today.getDate();
+varshowTime=valueY+'/'+valueM+'/'+valueD+' '+valueH+':'+valueMi+':'+valueS;
+var showTime2=new Date(showTime);
+var stillTime1=today.getTime();
+var stillTime2=showTime2.getTime();
+
+if(today<showTime2){
+var txt=(stillTime2-stillTime1)/1000;
+pp.innerHTML='现在距离' +valueY+'年'+valueM+'月'+valueD+'日'+valueH+':'+valueMi+':'+valueS+'还有'+functionPrint(txt);//后期发现条件语句里的输出功能类似，只是条件相反，所以可以封装。
+}else{
+var txt=(stillTime2-stillTime1)/1000;
+pp.innerHTML='现在距离' +valueY+'年'+valueM+'月'+valueD+'日'+valueH+':'+valueMi+':'+valueS+'已经过去'+functionPrint(txt);
+}
+}
+function checkSelect(el){       //如何获得selection当前选择值
+var index=el.selectedIndex;
+var text=el.options[index].text;
+var value=el.options[index].value;
+return value;
+}
+function functionPrint(txt){    //思路替换：通过毫秒除法得到天数、小时数等
+vartxtD=Math.floor(txt/3600/24);
+vartxtDn=txt%(3600*24);
+vartxtH=Math.floor(txtDn/3600);
+vartxtHn=txtDn%3600;
+vartxtM=Math.floor(txtHn/60);
+vartxtS=Math.round(txtHn%60);
+return (txtD+'天'+txtH+'时'+txtM+'分'+txtS+'秒')
+}
+
+
+</script>
+</body>
+</html>
